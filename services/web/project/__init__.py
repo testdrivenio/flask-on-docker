@@ -11,7 +11,6 @@ from flask import (
 )
 from flask_sqlalchemy import SQLAlchemy
 
-
 app = Flask(__name__)
 app.config.from_object("project.config.Config")
 db = SQLAlchemy(app)
@@ -49,7 +48,7 @@ def upload_file():
         file = request.files["file"]
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config["MEDIA_FOLDER"], filename))
-    return f"""
+    return """
     <!doctype html>
     <title>upload new File</title>
     <form action="" method=post enctype=multipart/form-data>
