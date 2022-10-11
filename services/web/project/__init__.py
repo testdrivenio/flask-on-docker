@@ -1,15 +1,14 @@
 import os
 
-from werkzeug.utils import secure_filename
 from flask import (
     Flask,
     jsonify,
     send_from_directory,
     request,
-    redirect,
-    url_for
 )
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import secure_filename
+
 
 app = Flask(__name__)
 app.config.from_object("project.config.Config")
