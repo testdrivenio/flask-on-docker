@@ -1,12 +1,5 @@
 pipeline {
   agent any
-  environment {
-    // Define any environment variables you need
-    DOCKERFILE_PATH = './services/web'
-    IMAGE_NAME = 'Flask-web'
-    TAG_NAME = new Date().format("yyyyMMddHHmmss")
-}
-
   stages {
     stage('Build') {
       steps {
