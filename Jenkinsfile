@@ -14,6 +14,7 @@ pipeline {
           sh 'docker build -t flaskapp:latest .'
         }
       }
+      
     }
   }
 } 
