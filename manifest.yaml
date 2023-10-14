@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webserver
+  template:
+    metadata:
+      labels:
+        app: webserver
+    spec:
+      containers:
+      - name: flaskapp
+        image: flaskapp:latest
+        ports:
+        - containerPort: 5000
+        command: ["gunicorn"]
+        args: ["--bind", "0.0.0.0:5000", "manage:app"]
+
