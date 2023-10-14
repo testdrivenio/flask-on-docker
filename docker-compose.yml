@@ -2,24 +2,36 @@ version: '3.8'
 
 services:
   web:
-    build: ./services/web
-    command: python manage.py run -h 0.0.0.0
+    build:
+      context: ./services/web
+      dockerfile: Dockerfile
+    command: gunicorn --bind 0.0.0.0:5000 manage:app
     volumes:
-      - ./services/web/:/usr/src/app/
-    ports:
-      - 5001:5000
+      - static_volume:/home/app/web/project/static
+      - media_volume:/home/app/web/project/media
+    expose:
+      - 5000
     env_file:
-      - ./.env.dev
+      - ./.env.prod
     depends_on:
       - db
   db:
     image: postgres:13
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=hello_flask
-      - POSTGRES_PASSWORD=hello_flask
-      - POSTGRES_DB=hello_flask_dev
+      - postgres_data_prod:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.prod
+  nginx:
+    build: ./services/nginx
+    volumes:
+      - static_volume:/home/app/web/project/static
+      - media_volume:/home/app/web/project/media
+    ports:
+      - 1337:80
+    depends_on:
+      - web
 
 volumes:
-  postgres_data:
+  postgres_data_prod:
+  static_volume:
+  media_volume:
