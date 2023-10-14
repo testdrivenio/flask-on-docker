@@ -7,10 +7,14 @@ pipeline {
             }
         }
 
-    stage('Build') {
+    stage('Build Docker Image') {
       steps {
-        echo 'Build Jenkins Pipeline'
+        echo 'Starting to build docker image'
+        script {
+          def dockerImage = docker.build("flask/web:latest")
+          dockerImage.withDockerfile('flask-on-docker/services/web')
+        }
       }
     }
   }
-}
+} 
