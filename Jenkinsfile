@@ -11,8 +11,7 @@ pipeline {
       steps {
         echo 'Starting to build docker image'
         script {
-          def dockerImage = docker.build("flask/web:latest")
-          dockerImage.withDockerfile('flask-on-docker/services/web')
+          sh 'docker build -t flaskapp:latest .'
         }
       }
     }
